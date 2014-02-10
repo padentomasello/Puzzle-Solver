@@ -1,0 +1,43 @@
+package puzzle;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import java.io.StringReader;
+
+
+/** Tests of Parser class.
+ *  @author */
+public class ParserInformTest {
+
+    private StringReader reader;
+
+    /** Set reader to contain the contents of LINES. */
+    private void setUp(String... lines) {
+        StringBuilder str = new StringBuilder();
+
+        for (String line : lines) {
+            str.append(line);
+            str.append("\n");
+        }
+        reader = new StringReader(str.toString());
+    }
+
+    /** Test help message ('java solve' with no arguments). */
+  
+    @Test
+    public void testParser() {
+        setUp("Paden is the student.   " +
+             "  Katie lives around here." +
+             "There is a blue house." +
+             "The worker does not live in the blue house. " +
+             "The carpenter lives in the green house. " +
+             "Annika is not the doctor. ");
+        Parser p= Parser.parse(reader);
+        Solver solver = new Solver();
+        p.inform(solver);
+    }
+    // Other test methods
+
+}
+
+

@@ -1,0 +1,67 @@
+// This is a SUGGESTED skeleton file.  Throw it away if you don't use it.
+
+package puzzle;
+
+import java.io.Reader;
+
+import java.util.Scanner;
+
+/** A sequence of Assertions and Questions parsed from a given file.
+ *  @author */
+class Parser {
+
+    /** A new Parser, containing no assertions or questions. */
+    private Parser() {
+    }
+
+    /** Returns a Parser that contains assertions and questions from
+     *  READER. */
+    static Parser parse(Reader reader) {
+        Scanner inp = new Scanner(reader);
+        Parser result = new Parser();
+        // FILL IN
+        return result;
+    }
+
+    /** Transfer all information conveyed by the asserations I have
+     *  read to SOLVER. */
+    void inform(Solver solver) {
+        // FILL IN
+    }
+
+    /** Returns the number of assertions I have parsed. */
+    int numAssertions() {
+        return 0; // REPLACE
+    }
+
+    /** Returns the text of assertion number K (numbering from 0), with extra
+     *  spaces removed. */
+    String getAssertion(int k) {
+        return ""; // REPLACE
+    }
+
+    /** Inform SOLVER of the information in assertion K. */
+    void inform(Solver solver, int k) {
+        // FILL IN
+    }
+
+    /** Returns the number of questions I have parsed. */
+    int numQuestions() {
+        return 0; // REPLACE
+    }
+
+    /** Return the text of question number K (numbering from 0), with extra
+     *  spaces removed. */
+    String getQuestion(int k) {
+        return ""; // REPLACE
+    }
+
+    /** Return the answer to question K, according to the information
+     *  in SOLVER. */
+    String getAnswer(Solver solver, int k) {
+        return ""; // REPLACE
+    }
+
+
+}
+

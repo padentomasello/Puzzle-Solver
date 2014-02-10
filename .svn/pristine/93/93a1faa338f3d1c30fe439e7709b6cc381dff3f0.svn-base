@@ -1,0 +1,28 @@
+package puzzle;
+
+// Remove all comments that begin with //, and replace appropriately.
+// Feel free to modify ANYTHING in this file, or to not use
+// it at all.
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/** Tests of Parser class.
+ *  @author */
+public class PermNumTest {
+
+    
+    @Test
+    public void testPermNum() throws Exception {
+        PermNum x;
+        x = new PermNum(3, 9);
+        assertEquals("PermNum is working incorrectly", 0, x.get(0));
+        x.increment(0);
+        x.increment(0);
+        x.increment(0);
+        assertEquals("PermNum is working incorrectly", 0, x.get(0));
+        assertEquals("PermNum is working incorrectly", 1, x.get(1));
+        }
+}
+
+

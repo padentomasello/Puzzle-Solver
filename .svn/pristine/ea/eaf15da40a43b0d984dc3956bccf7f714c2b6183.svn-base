@@ -1,0 +1,15 @@
+package puzzle;
+import static puzzle.EntityType.*;
+
+public class EntityTriple {
+    NamedEntity _name, _job, _color;
+    EntityTriple(NamedEntity name, NamedEntity job, NamedEntity color) throws Exception{
+        if (name.getType() == PERSON | job.getType() == OCCUPATION | color.getType() == COLOR) {
+            _name = name;
+            _job = job;
+            _color = color;
+        } else {
+            throw new Exception("not a valid EntityTriple");
+        }
+    }
+}

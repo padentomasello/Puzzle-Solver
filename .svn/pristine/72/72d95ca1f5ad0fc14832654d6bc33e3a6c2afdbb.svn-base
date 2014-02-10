@@ -1,0 +1,50 @@
+package puzzle;
+
+// Remove all comments that begin with //, and replace appropriately.
+// Feel free to modify ANYTHING in this file, or to not use
+// it at all.
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import java.io.StringReader;
+
+/** Tests of Parser class.
+ *  @author */
+public class Test2Test {
+
+    private StringReader reader;
+
+    /** Set reader to contain the contents of LINES. */
+    private void setUp(String... lines) {
+        StringBuilder str = new StringBuilder();
+
+        for (String line : lines) {
+            str.append(line);
+            str.append("\n");
+        }
+        reader = new StringReader(str.toString());
+    }
+
+    /** Test help message ('java solve' with no arguments). 
+     * @throws Exception */
+    @Test
+    public void testEcho() throws Exception {
+        setUp("Jack lives in the blue house.  Mary does not        live in the blue house.",
+                "The mechanic lives around here.",
+                "There is a red house.  The architect lives around here.",
+                "The sailor lives around here.", 
+                "Who is the mechanic?", 
+                "What do you know about Jack?",
+                "What do you know about Mary?");
+        Parser p = Parser.parse(reader);
+        Solver solver = new Solver();
+        p.inform(solver);
+        
+        for (int i = 0; i < p.numQuestions(); i += 1) {
+            System.out.println(p.getAnswer(solver, i));
+        }
+    }
+}
+
+

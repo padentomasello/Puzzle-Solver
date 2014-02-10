@@ -1,0 +1,45 @@
+// This is a SUGGESTED skeleton file.  Throw it away if you don't use it.
+
+package puzzle;
+
+import java.util.List;
+
+/** A puzzle-solving engine.
+    @  author */
+class Solver {
+
+    /** Asserts that E0 and E1 are associated (e.g., Tom is the
+     *  carpenter). */
+    void associate(NamedEntity e0, NamedEntity e1) {
+        // FILL IN
+    }
+
+    /** Asserts that E0 and E1 are not associated (e.g., Tom is not the
+     *  carpenter). */
+    void disassociate(NamedEntity e0, NamedEntity e1) {
+        // FILL IN
+    }
+
+    /** Asserts that E exists (e.g., Tom lives around here). */
+    void exists(NamedEntity e) {
+        // FILL IN
+    }
+
+    /** Return a list of all possible associations of entities that include
+     *  the entity named ID.  For example, knownAbout("Tom") might
+     *  contain a list of the lists:
+     *     [ (Tom, PERSON), (plumber, OCCUPATION), (green, COLOR) ],
+     *     [ (Tom, PERSON), (plumber, OCCUPATION), (color#1, COLOR) ]
+     *  (where color#1 denotes an anonymous color.). */
+    List<List<NamedEntity>> knownAbout(String id) {
+        return null; // REPLACE
+    }
+
+    /** Return true iff the current set of facts is impossible. */
+    boolean impossible() {
+        return false;  // FILL IN
+    }
+
+    // Add more here.
+
+}

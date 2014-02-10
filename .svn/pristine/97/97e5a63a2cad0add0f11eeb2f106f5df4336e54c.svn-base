@@ -1,0 +1,186 @@
+// This is a SUGGESTED skeleton file.  Throw it away if you don't use it.
+
+package puzzle;
+
+import java.io.Reader;
+import static puzzle.EntityType.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.MatchResult;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Pattern;
+
+/** A sequence of Assertions and Questions parsed from a given file.
+ *  @author */
+class Parser {
+    private static final String STATE1 = "([A-Z][a-z]*|The\\s+[a-z]+)\\s+(lives\\s+in|do" +
+    		"es\\s+not\\s+live\\s+in)\\s+the\\s+([a-z]+)\\s+house\\.";
+    private static final String STATE2 = "([A-Z][a-z]*)\\s+(is|is\\s+not)\\s+" +
+    		"the\\s+([a-z]*)\\.";
+    private static final String STATE3 = "([A-Z][a-z]*?|The\\s+([a-z]))?\\s+lives\\s+around" +
+    		"\\s+here\\.";
+    private static final String STATE4 = "There\\s+is\\s+a\\s+([a-z]+)\\s+house\\.";
+    private static final String QUEST1 = "What\\s+do\\s+you\\s+know\\s+" +
+    		"about\\s+([A-Z][a-z]*|the\\s+[a-z]+)\\?";
+    private static final String QUEST2 = "What\\s+do\\s+you\\s+know\\s+about" +
+    		"\\s+the\\s+([a-z]+)\\s+house\\?";
+    private static final String QUEST3 = "Who\\s+is\\s+the\\s+([a-z]+)\\?";
+    private static final String QUEST4 = "Who\\s+lives\\s+in\\s+the\\s+([a-z]+)\\s+house\\?";
+    private static final String QUEST5 = "What\\s+does\\s+the\\s+occupant\\s+of\\s+the\\s+([a-z]+)\\s+house+\\s+do\\?";
+    private static final String QUEST6 = "What\\s+does\\s+([A-Z][a-z]*)\\s+do\\?";
+    private static final String QUEST7 = "Where\\s+does\\s+([A-Z][a-z]*|the\\s+[a-z]+)\\s+live\\?";
+    private static final String[] stateArray = {STATE1, STATE2, STATE3, STATE4};       
+    private static final String[] questArray = {QUEST1, QUEST2, QUEST3, QUEST4, QUEST5, QUEST6, QUEST7};
+    private static ArrayList<String> stateStringArray = new ArrayList<String>(0);
+    private static ArrayList<String> questStringArray = new ArrayList<String>(0);
+    /** A new Parser, containing no assertions or questions. */
+    private Parser() {
+    }
+
+    /** Returns a Parser that contains assertions and questions from
+     *  READER. */
+    static Parser parse(Reader reader) {
+        Scanner inp = new Scanner(reader);
+        Parser result = new Parser();
+        String x = null;
+        while (inp.hasNext()) {
+            x = inp.findWithinHorizon(".*?(\\.|\\?)", 0).replaceAll("\\s+", " ").trim();
+            if (inp.match().group(1).equals(".")) {
+                stateStringArray.add(x);
+            } else {
+                questStringArray.add(x);
+            }
+        }
+        return result;
+    }
+    /** Transfer all information conveyed by the asserations I have
+     *  read to SOLVER. */
+    void inform(Solver solver) {
+        String finalMatch = null;
+        MatchResult groups = null;
+        for (String statement: stateStringArray) {
+            Scanner stateScanner = new Scanner(statement);
+            
+            for (String match: stateArray) {
+                if (statement.matches(match)) {
+                    finalMatch = match;
+                    stateScanner.findInLine(match);
+                    groups = stateScanner.match();
+                    break;
+                }
+            }
+            NamedEntity name = null, occupation= null, color= null;
+            if (finalMatch == STATE1) {
+                name = new NamedEntity(groups.group(1), PERSON);
+                color = new NamedEntity(groups.group(3), COLOR);
+                if (groups.group(2).equals("lives in")) {
+                    solver.associate(name, color);
+                } else {
+                    solver.disassociate(name, color);
+                }
+            }
+            if (finalMatch == STATE2) {
+                name = new NamedEntity(groups.group(1), PERSON);
+                    occupation = new NamedEntity(groups.group(3), OCCUPATION);
+                    if (groups.group(2).equals("is")) {
+                        solver.associate(name, occupation);
+                    } else {
+                        solver.disassociate(name, occupation);
+                    }
+            }
+            if (finalMatch == STATE3) {
+                if (groups.group(2) == null) {
+                    name = new NamedEntity(groups.group(1), PERSON);
+                    solver.exists(name);
+                } else {
+                    occupation = new NamedEntity(groups.group(2), OCCUPATION);
+                    solver.exists(occupation);
+                }
+            }
+            if (finalMatch == STATE4) {
+                color = new NamedEntity(groups.group(1), COLOR);
+                solver.exists(color);
+            }
+        }
+    }
+
+    private void compileExistingEntities(Solver solver) {
+        String finalMatch = null;
+        MatchResult groups = null;
+        for (String statement: stateStringArray) {
+            Scanner stateScanner = new Scanner(statement);
+            
+            for (String match: stateArray) {
+                if (statement.matches(match)) {
+                    finalMatch = match;
+                    stateScanner.findInLine(match);
+                    groups = stateScanner.match();
+                    break;
+                }
+            }
+            NamedEntity name = null, occupation= null, color= null;
+            if (finalMatch == STATE1) {
+                name = new NamedEntity(groups.group(1), PERSON);
+                color = new NamedEntity(groups.group(3), COLOR);
+                solver.exists(name);
+                solver.exists(color);
+            }
+            if (finalMatch == STATE2) {
+                name = new NamedEntity(groups.group(1), PERSON);
+                occupation = new NamedEntity(groups.group(3), OCCUPATION);
+                solver.exists(name);
+                solver.exists(occupation);
+            }
+            if (finalMatch == STATE3) {
+                if (groups.group(2) == null) {
+                    name = new NamedEntity(groups.group(1), PERSON);
+                    solver.exists(name);
+                } else {
+                    occupation = new NamedEntity(groups.group(2), OCCUPATION);
+                    solver.exists(occupation);
+                }
+            }
+            if (finalMatch == STATE4) {
+                color = new NamedEntity(groups.group(1), COLOR);
+                solver.exists(color);
+            }
+        }
+            
+    }
+    
+    /** Returns the number of assertions I have parsed. */
+    int numAssertions() {
+        return stateStringArray.size();
+    }
+
+    /** Returns the text of assertion number K (numbering from 0), with extra
+     *  spaces removed. */
+    String getAssertion(int k) {
+        return stateStringArray.get(k);
+    }
+
+    /** Inform SOLVER of the information in assertion K. */
+    void inform(Solver solver, int k) {
+        
+    }
+
+    /** Returns the number of questions I have parsed. */
+    int numQuestions() {
+        return questStringArray.size();
+    }
+
+    /** Return the text of question number K (numbering from 0), with extra
+     *  spaces removed. */
+    String getQuestion(int k) {
+        return questStringArray.get(k);
+    }
+
+    /** Return the answer to question K, according to the information
+     *  in SOLVER. */
+    String getAnswer(Solver solver, int k) {
+        return ""; // REPLACE
+    }
+
+
+}
+

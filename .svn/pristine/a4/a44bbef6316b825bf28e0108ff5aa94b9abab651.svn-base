@@ -1,0 +1,114 @@
+// This is a SUGGESTED skeleton file.  Throw it away if you don't use it.
+
+package puzzle;
+
+import java.io.Reader;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.MatchResult;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Pattern;
+
+/** A sequence of Assertions and Questions parsed from a given file.
+ *  @author */
+class Parser {
+    private static final String STATE1 = "([A-Z][a-z]*|The\\s+[a-z]+)\\s+(lives\\s+in|do" +
+    		"es\\s+not\\s+live\\s+in)\\s+the\\s+([a-z]+)\\s+house\\.";
+    private static final String STATE2 = "([A-Z][a-z]*)\\s+(is|is\\s+not)\\s+" +
+    		"the\\s+([a-z]*)\\.";
+    private static final String STATE3 = "([A-Z][a-z]*|The\\s+[a-z])\\s+lives\\s+around" +
+    		"\\s+here\\.";
+    private static final String STATE4 = "There\\s+is\\s+a\\s+([a-z]+)\\s+house\\.";
+    private static final String QUEST1 = "What\\s+do\\s+you\\s+know\\s+" +
+    		"about\\s+([A-Z][a-z]*|the\\s+[a-z]+)\\?";
+    private static final String QUEST2 = "What\\s+do\\s+you\\s+know\\s+about" +
+    		"\\s+the\\s+([a-z]+)\\s+house\\?";
+    private static final String QUEST3 = "Who\\s+is\\s+the\\s+([a-z]+)\\?";
+    private static final String QUEST4 = "Who\\s+lives\\s+in\\s+the\\s+([a-z]+)\\s+house\\?";
+    private static final String QUEST5 = "What\\s+does\\s+the\\s+occupant\\s+of\\s+the\\s+([a-z]+)\\s+house+\\s+do\\?";
+    private static final String QUEST6 = "What\\s+does\\s+([A-Z][a-z]*)\\s+do\\?";
+    private static final String QUEST7 = "Where\\s+does\\s+([A-Z][a-z]*|the\\s+[a-z]+)\\s+live\\?";
+    private static final String[] stateArray = {STATE1, STATE2, STATE3, STATE4};       
+    private static final String[] questArray = {QUEST1, QUEST2, QUEST3, QUEST4, QUEST5, QUEST6, QUEST7};
+    private static ArrayList<MatchResult> stateMatches = new ArrayList<MatchResult>();
+    private static ArrayList<MatchResult> questMatches = new ArrayList<MatchResult>();
+    private static ArrayList<String> stateStringArray = new ArrayList<String>(0);
+    private static ArrayList<String> questStringArray = new ArrayList<String>(0);
+    /** A new Parser, containing no assertions or questions. */
+    private Parser() {
+    }
+
+    /** Returns a Parser that contains assertions and questions from
+     *  READER. */
+    static Parser parse(Reader reader) {
+        Scanner inp = new Scanner(reader);
+        Parser result = new Parser();
+        String x = null;
+        while (inp.hasNext()) {
+            x = inp.findInLine(".*?(\\.|\\?)");
+            if (inp.match().group(1).equals(".")) {
+                stateStringArray.add(x);
+            } else {
+                questStringArray.add(x);
+            }
+        }
+   /**     for (String state: stateArray) {
+            inp = new Scanner(reader);
+            while (inp.hasNext(state)) {
+                inp.findInLine(state);
+                stateMatches.add(inp.match());
+            }
+        }
+        for (String quest: questArray) {
+            inp = new Scanner(reader);
+            while (inp.hasNext(quest)) {
+                inp.findInLine(quest);
+                questMatches.add(inp.match());
+            }
+        }
+        */
+        return result;
+    }
+    /** Transfer all information conveyed by the asserations I have
+     *  read to SOLVER. */
+    void inform(Solver solver) {
+        // FILL IN
+    }
+
+    /** Returns the number of assertions I have parsed. */
+    int numAssertions() {
+        return stateArray.length; // REPLACE
+    }
+
+    /** Returns the text of assertion number K (numbering from 0), with extra
+     *  spaces removed. */
+    String getAssertion(int k) {
+        return ""; // REPLACE
+    }
+
+    /** Inform SOLVER of the information in assertion K. */
+    void inform(Solver solver, int k) {
+        // FILL IN
+    }
+
+    /** Returns the number of questions I have parsed. */
+    int numQuestions() {
+        return 0; // REPLACE
+    }
+
+    /** Return the text of question number K (numbering from 0), with extra
+     *  spaces removed. */
+    String getQuestion(int k) {
+        return ""; // REPLACE
+    }
+
+    /** Return the answer to question K, according to the information
+     *  in SOLVER. */
+    String getAnswer(Solver solver, int k) {
+        return ""; // REPLACE
+    }
+
+
+}
+

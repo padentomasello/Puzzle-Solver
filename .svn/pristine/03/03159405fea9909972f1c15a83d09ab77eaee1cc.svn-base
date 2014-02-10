@@ -1,0 +1,34 @@
+package puzzle;
+import static puzzle.EntityType.*;
+
+import java.util.ArrayList;
+
+public class SolutionPermutation {
+    public ArrayList<EntityTriple> solution = new ArrayList<EntityTriple>();
+   
+    SolutionPermutation() {
+        
+    }
+    public void add(EntityTriple e) {
+        solution.add(e);
+    }
+    public EntityTriple get(int k) {
+        return solution.get(k);
+    }
+    public boolean isAssociated(NamedEntity e0, NamedEntity e1) {
+        for (EntityTriple triple: solution) {
+            if (triple.isTripleAssociated(e0, e1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public EntityTriple aboutSingleEntity(NamedEntity e) {
+        for (EntityTriple et: solution) {
+            if (et.contains(e)) {
+                return et;
+            }
+        }
+        return null;
+    }
+}

@@ -1,0 +1,30 @@
+package puzzle;
+
+public class PermNum {
+    int[] number;
+    int x;
+    PermNum(int _x, int len) {
+        x = _x;
+        number = new int[len];
+        for (int i = 0; i < len; i += 1) {
+            number[i] = 0;
+        }
+    }
+    
+    public void increment(int d) {
+        number[d] = number[d] + 1;
+        if (number[d] == x) {
+            number[d] = 0;
+            if (d < number.length - 1) {
+                increment(d + 1);
+            }
+        }
+    }
+    
+    public int get(int x) {
+        return number[x];
+    }
+    public double numIncr() {
+        return Math.pow(x, number.length);
+    }
+}

@@ -1,0 +1,52 @@
+package puzzle;
+import static puzzle.EntityType.*;
+
+public class EntityTriple {
+    private NamedEntity _name, _job, _color;
+    EntityTriple(NamedEntity name, NamedEntity job, NamedEntity color) throws Exception{
+        if (name.getType() == PERSON | job.getType() == OCCUPATION | color.getType() == COLOR) {
+            _name = name;
+            _job = job;
+            _color = color;
+        } else {
+            throw new Exception("not a valid EntityTriple");
+        }
+    }
+    public boolean equals(EntityTriple e) {
+        if (_name.equals(e.name()) & _job.equals(e.job()) &  _color.equals(e.color())) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean contains(NamedEntity e) {
+        if(_name.equals(e) | _job.equals(e) | _color.equals(e)) {
+            return true;
+        }
+        return false;
+    }
+    
+    public NamedEntity name() {
+        return _name;
+    }
+    public NamedEntity job() {
+        return _job;
+    }
+    public NamedEntity color() {
+        return _color;
+    }
+    public boolean isTripleAssociated(NamedEntity e0, NamedEntity e1) {
+        if (e0.equals(_name) & e1.equals(_job)) {
+            return true;
+        }
+        if (e0.equals(_name) & e1.equals(_color)) {
+            return true;
+        }
+        if (e0.equals(_job) & e1.equals(_color)) {
+            return true;
+        }
+        return false;
+    }
+}
+
+

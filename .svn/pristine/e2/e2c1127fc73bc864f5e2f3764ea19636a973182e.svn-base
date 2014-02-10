@@ -1,0 +1,32 @@
+package puzzle;
+
+import static org.junit.Assert.*;
+
+import java.io.StringReader;
+
+import org.junit.Test;
+
+public class TrivialTest {
+    private StringReader reader;
+
+    /** Set reader to contain the contents of LINES. */
+    private void setUp(String... lines) {
+        StringBuilder str = new StringBuilder();
+        for (String line : lines) {
+            str.append(line);
+            str.append("\n");
+        }
+        reader = new StringReader(str.toString());
+    }
+
+    /** Test help message ('java solve' with no arguments). 
+     * @throws Exception */
+    @Test
+    public void testEcho() throws Exception {
+        setUp("John is the carpenter.     Who is the carpenter?");
+        Parser p = Parser.parse(reader);
+        Solver solver = new Solver();
+        p.inform(solver);
+        assertEquals("Trivial input not solved correctly", "A: John is the carpenter." , p.getAnswer(solver, 0));
+    }
+}

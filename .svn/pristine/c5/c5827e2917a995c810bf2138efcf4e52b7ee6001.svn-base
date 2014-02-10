@@ -1,0 +1,100 @@
+// This is a SUGGESTED skeleton file.  Throw it away if you don't use it.
+
+package puzzle;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import static puzzle.EntityType.*;
+
+/** A puzzle-solving engine.
+    @  author */
+class Solver {
+    ArrayList<NamedEntity> people = new ArrayList<NamedEntity>();
+    ArrayList<NamedEntity> jobs = new ArrayList<NamedEntity>();
+    ArrayList<NamedEntity> houses = new ArrayList<NamedEntity>();
+    ArrayList<EntityTriple> permutations= new ArrayList<EntityTriple>();
+    HashMap<NamedEntity, ArrayList<NamedEntity>> peoplePermuation = new HashMap<NamedEntity, ArrayList<NamedEntity>>();
+    /** Asserts that E0 and E1 are associated (e.g., Tom is the
+     *  carpenter). */
+    void associate(NamedEntity e0, NamedEntity e1) {
+        System.out.println(e0);
+        System.out.println(e1);
+    }
+
+    /** Asserts that E0 and E1 are not associated (e.g., Tom is not the
+     *  carpenter). */
+    void disassociate(NamedEntity e0, NamedEntity e1) {
+        System.out.println("dis:"+e0);
+        System.out.println("dis:"+e1);
+    }
+
+    /** Asserts that E exists (e.g., Tom lives around here). */
+    void exists(NamedEntity e) {
+        System.out.println("exists:"+e);
+        if (e.getType() == PERSON & !people.contains(e)) {
+            people.add(e);
+        }
+        if (e.getType() == OCCUPATION & !jobs.contains(e)) {
+            jobs.add(e);
+        }
+        if (e.getType() == COLOR & !houses.contains(e)) {
+            houses.add(e);
+        }
+    }
+
+    /** Return a list of all possible associations of entities that include
+     *  the entity named ID.  For example, knownAbout("Tom") might
+     *  contain a list of the lists:
+     *     [ (Tom, PERSON), (plumber, OCCUPATION), (green, COLOR) ],
+     *     [ (Tom, PERSON), (plumber, OCCUPATION), (color#1, COLOR) ]
+     *  (where color#1 denotes an anonymous color.). */
+    List<List<NamedEntity>> knownAbout(String id) {
+        return null; // REPLACE
+    }
+
+    /** Return true iff the current set of facts is impossible. */
+    boolean impossible() {
+        return false;  // FILL IN
+    }
+    /** Returns an annoynmous NamedEntity if it exists in L. If it does, it replaces Annonymous Entity with nonannonymous entity.
+     * If not, it adds entity to list.   */
+    public NamedEntity checkAnnonymous(ArrayList<NamedEntity> L, NamedEntity e) {
+        for (int i= 0; i < L.size(); i+=1) {
+            if (L.get(i).isAnonymous()) {
+                NamedEntity x= L.get(i);
+                L.set(i, e);
+                return x;
+            }
+        }
+        L.add(e);
+        return null;
+    }
+    public void addAnnonymous() {
+        int x = Math.max(people.size(), jobs.size());
+        x = Math.max(x, houses.size());
+        while (houses.size() < x) {
+            houses.add(new NamedEntity(NamedEntity.makeName("color"), COLOR));
+        }
+        while (people.size() < x) {
+            people.add(new NamedEntity(NamedEntity.makeName("person"), PERSON));
+        }
+        while (jobs.size() < x) {
+            jobs.add(new NamedEntity(NamedEntity.makeName("occupation"), OCCUPATION));
+        }
+    }
+
+    public void buildPermutation() throws Exception {
+       addAnnonymous();
+       for (int i= 0; i < people.size(); i += 1) {
+           for(int j = 0; j < people.size(); j += 1) {
+               for (int k = 0; k < people.size(); k += 1) {
+                   EntityTriple a;
+                   a = new EntityTriple(people.get(k), jobs.get(j), houses.get(i));
+                   permutations.add(a);
+               }
+           }
+       }
+       System.out.println("yes");
+    }
+}

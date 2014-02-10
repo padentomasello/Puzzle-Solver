@@ -1,0 +1,42 @@
+package puzzle;
+import static org.junit.Assert.*;
+import java.io.StringReader;
+
+import org.junit.Test;
+/** Tests of Parser class.
+ *  @author Daniel Paden Tomasello cs61b-bz */
+public class test9Test {
+
+    private StringReader reader;
+
+    /** Set reader to contain the contents of LINES. */
+    private void setUp(String... lines) {
+        StringBuilder str = new StringBuilder();
+
+        for (String line : lines) {
+            str.append(line);
+            str.append("\n");
+        }
+        reader = new StringReader(str.toString());
+    }
+
+    /** Test help message ('java solve' with no arguments).
+     * @throws Exception */
+    @Test
+    public void testEcho() throws PuzzleException {
+        setUp("Jura is not the dummy. Wolodymyr is not the dummy.",
+                "Wolodymyr is not the lawyer. Jura is not the diplomat.",
+                "Dummy lives around here.",
+                "Who is the dummy?", "What does Dummy do?",
+                "What do you know about Jura?",
+                "What do you know about Wolodymyr?");
+        Parser p = Parser.parse(reader);
+        Solver solver = new Solver();
+        p.inform(solver);
+        for (int i = 0; i < p.numQuestions(); i += 1) {
+             System.out.println(p.getAnswer(solver, i));
+        }
+    }
+}
+
+

@@ -1,0 +1,46 @@
+package puzzle;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import static puzzle.EntityType.PERSON;
+
+import java.io.StringReader;
+
+
+/** Tests of Parser class.
+ *  @author */
+public class BuildPermutationsTest {
+
+    private StringReader reader;
+
+    /** Set reader to contain the contents of LINES. */
+    private void setUp(String... lines) {
+        StringBuilder str = new StringBuilder();
+
+        for (String line : lines) {
+            str.append(line);
+            str.append("\n");
+        }
+        reader = new StringReader(str.toString());
+    }
+
+    /** Test help message ('java solve' with no arguments).
+     * @throws Exception */
+    @Test
+    public void testParser() throws Exception {
+        setUp("Paden is the student.   "
+             + "  Katie lives around here."
+             + "There is a blue house."
+             + "The worker does not live in the blue house. "
+             + "The carpenter lives in the green house. "
+             + "Annika is not the doctor. ");
+        Parser p = Parser.parse(reader);
+        Solver solver = new Solver();
+        p.compileExistingEntities(solver);
+        solver.buildPermutation();
+        NamedEntity a = new NamedEntity("Paden", PERSON);
+        assertEquals("Did not build permutations correctly", true,
+                solver.permutations.get(0).get(0).name().equals(a));
+        assertEquals("Did not build permutations correctly", 16,
+                solver.permutations.size());
+    }
+}

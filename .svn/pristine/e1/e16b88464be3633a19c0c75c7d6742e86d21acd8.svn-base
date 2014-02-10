@@ -1,0 +1,50 @@
+package puzzle;
+
+// Remove all comments that begin with //, and replace appropriately.
+// Feel free to modify ANYTHING in this file, or to not use
+// it at all.
+import static puzzle.EntityType.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import java.io.StringReader;
+
+/** Tests of Parser class.
+ *  @author */
+public class ParsertoSolverTest {
+
+    private StringReader reader;
+
+    /** Set reader to contain the contents of LINES. */
+    private void setUp(String... lines) {
+        StringBuilder str = new StringBuilder();
+
+        for (String line : lines) {
+            str.append(line);
+            str.append("\n");
+        }
+        reader = new StringReader(str.toString());
+    }
+
+    /** Test help message ('java solve' with no arguments). 
+     * @throws Exception */
+ 
+    @Test
+    public void testParser() throws Exception {
+        setUp("Paden is the student.   " +
+             "  Katie lives around here." +
+             "There is a blue house." +
+             "The worker does not live in the blue house. " +
+             "The carpenter lives in the green house. " +
+             "Annika is the doctor. ");
+        Parser p= Parser.parse(reader);
+        Solver solver = new Solver();
+        p.inform(solver);
+        assertEquals("Did not inform properly", true, solver.people.get(0).equals(new NamedEntity("Paden", PERSON)));
+        assertEquals("Did not inform properly", true, solver.jobs.get(0).equals(new NamedEntity("student", OCCUPATION)));
+    }
+    // Other test methods
+
+}
+
+

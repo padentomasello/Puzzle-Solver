@@ -1,0 +1,26 @@
+1. Isa does not live in the pink house.
+2. Isa does not live in the yellow house.
+3. There is a green house.
+4. The plumber lives around here.
+5. Annika is the carpenter.
+6. Nick does not live in the yellow house.
+7. The scholar lives in the pink house.
+
+Q: Who is the plumber?
+A: Isa is the plumber.
+Q: Who lives in the yellow house?
+A: Annika lives in the yellow house.
+Q: What does Isa do?
+A: Isa is the plumber.
+Q: What does the occupant of the green house do?
+A: The plumber lives in the green house.
+Q: Where does Annika live?
+A: Annika lives in the yellow house.
+Q: Where does the plumber live?
+A: The plumber lives in the green house.
+Q: What do you know about the scholar?
+A: Nick is the scholar and lives in the pink house.
+Q: What do you know about Nick?
+A: Nick is the scholar and lives in the pink house.
+Q: What do you know about the pink house?
+A: Nick is the scholar and lives in the pink house.
